@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Box, Button, TextField, Typography, Paper } from '@mui/material';
+import './Chatbot.css'; // Import the CSS file
 
 const Chatbot = () => {
   const [input, setInput] = useState('');
@@ -87,56 +89,63 @@ const Chatbot = () => {
       const trimmedLine = line.trim();
       if (trimmedLine) {
         return (
-          <div key={index} className="mt-1">
+          <Box key={index} mt={1}>
             {msg.sender === 'bot' && trimmedLine.startsWith('**') ? (
-              <span className="font-bold">{trimmedLine.replace(/\*\*/g, '')}</span>
+              <Typography variant="body1" component="strong">{trimmedLine.replace(/\*\*/g, '')}</Typography>
             ) : (
-              <span>{msg.sender === 'bot' ? (index === 0 ? '' : '• ') : ''}{trimmedLine}</span>
+              <Typography variant="body1">
+                {msg.sender === 'bot' ? (index === 0 ? '' : '• ') : ''}{trimmedLine}
+              </Typography>
             )}
-          </div>
+          </Box>
         );
       }
       return null; // Skip empty lines
     });
 
     return (
-      <div className={`message mb-2 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-        <span className="font-bold">{msg.sender === 'user' ? 'You' : 'Bot'}:</span>
-        {lines}
-        <button onClick={() => copyToClipboard(msg.text)} className="ml-2 text-blue-500 underline">
-          Copy
-        </button>
-      </div>
+      <Box className={`message ${msg.sender === 'user' ? 'message-user' : 'message-bot'}`}>
+        <Paper
+          elevation={2}
+          className={`message-paper ${msg.sender === 'user' ? 'message-user-paper' : 'message-bot-paper'}`}
+        >
+          <Typography variant="subtitle2" fontWeight="bold">{msg.sender === 'user' ? 'You' : 'Bot'}:</Typography>
+          {lines}
+          <Button onClick={() => copyToClipboard(msg.text)} size="small" variant="outlined" className="copy-button">
+            Copy
+          </Button>
+        </Paper>
+      </Box>
     );
   };
 
   return (
-    <div className="chat-container flex flex-col h-screen p-4 border border-gray-300 bg-white">
-      <div className="messages overflow-y-auto flex-grow mb-4">
+    <Box className="chat-container">
+      <Box className="messages">
         {messages.map((msg, index) => (
           <div key={index}>
             {renderMessage(msg)}
           </div>
         ))}
-        {loading && <div className="text-gray-500">Loading...</div>}
-        {typing && <div className="text-gray-500">Bot is typing...</div>}
-      </div>
-      <form onSubmit={handleSubmit} className="flex">
-        <input
-          type="text"
+        {loading && <Typography color="textSecondary">Loading...</Typography>}
+        {typing && <Typography color="textSecondary">Bot is typing...</Typography>}
+      </Box>
+      <form onSubmit={handleSubmit} style={{ display: 'flex' }}>
+        <TextField
+          variant="outlined"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
-          className="border border-gray-300 rounded-lg flex-grow p-2"
+          fullWidth
         />
-        <button type="submit" className="ml-2 bg-blue-500 text-white rounded-lg p-2">
+        <Button type="submit" variant="contained" color="primary" style={{ marginLeft: '8px' }}>
           Send
-        </button>
+        </Button>
       </form>
-      <button onClick={clearChat} className="mt-2 bg-red-500 text-white rounded-lg p-2">
+      <Button onClick={clearChat} variant="contained" color="secondary" style={{ marginTop: '8px' }}>
         Clear Chat
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 

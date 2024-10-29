@@ -1,0 +1,45 @@
+/* Chatbot.css */
+
+.chat-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .messages {
+    flex-grow: 1;
+    overflow: auto;
+    margin-bottom: 16px;
+  }
+  
+  .message {
+    margin-bottom: 16px;
+    display: flex;
+  }
+  
+  .message-user {
+    flex-direction: row-reverse;
+  }
+  
+  .message-bot {
+    flex-direction: row;
+  }
+  
+  .message-paper {
+    padding: 8px;
+    max-width: 80%;
+  }
+  
+  .message-user-paper {
+    background-color: #e3f2fd; /* Light blue for user messages */
+  }
+  
+  .message-bot-paper {
+    background-color: #f1f1f1; /* Light gray for bot messages */
+  }
+  
+  .copy-button {
+    margin-left: 8px;
+  }
+  
