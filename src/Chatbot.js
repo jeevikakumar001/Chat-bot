@@ -89,14 +89,35 @@ const Chatbot = () => {
   };
 
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
+    // Check if the Clipboard API is available
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          setSnackbarMessage('Copied to clipboard!');
+          setSnackbarOpen(true);
+        })
+        .catch((err) => {
+          console.error('Could not copy text: ', err);
+          setSnackbarMessage('Failed to copy!');
+          setSnackbarOpen(true);
+        });
+    } else {
+      // Fallback for browsers that don't support the Clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
         setSnackbarMessage('Copied to clipboard!');
         setSnackbarOpen(true);
-      })
-      .catch((err) => {
-        console.error('Could not copy text: ', err);
-      });
+      } catch (err) {
+        console.error('Fallback: Could not copy text: ', err);
+        setSnackbarMessage('Failed to copy!');
+        setSnackbarOpen(true);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   const handleSnackbarClose = () => {
