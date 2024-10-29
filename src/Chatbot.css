@@ -1,45 +1,61 @@
-/* Chatbot.css */
+/* src/Chatbot.css */
 
 .chat-container {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .messages {
-    flex-grow: 1;
-    overflow: auto;
-    margin-bottom: 16px;
-  }
-  
-  .message {
-    margin-bottom: 16px;
-    display: flex;
-  }
-  
-  .message-user {
-    flex-direction: row-reverse;
-  }
-  
-  .message-bot {
-    flex-direction: row;
-  }
-  
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.messages {
+  flex-grow: 1;
+  overflow: auto;
+  margin-bottom: 16px;
+  padding-right: 8px; /* Added padding for scroll */
+}
+
+.message {
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.message-user {
+  flex-direction: row-reverse;
+}
+
+.message-bot {
+  flex-direction: row;
+}
+
+.message-paper {
+  padding: 8px;
+  max-width: 90%; /* Allow more width for smaller screens */
+  word-wrap: break-word; /* Break long words */
+}
+
+.message-user-paper {
+  background-color: #e3f2fd; /* Light blue for user messages */
+}
+
+.message-bot-paper {
+  background-color: #f1f1f1; /* Light gray for bot messages */
+}
+
+.copy-button {
+  margin-left: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
   .message-paper {
-    padding: 8px;
-    max-width: 80%;
+    max-width: 95%; /* Allow more width on small screens */
   }
-  
-  .message-user-paper {
-    background-color: #e3f2fd; /* Light blue for user messages */
+
+  .input-container {
+    flex-direction: column; /* Stack input on small screens */
   }
-  
-  .message-bot-paper {
-    background-color: #f1f1f1; /* Light gray for bot messages */
+
+  .input-container button {
+    margin-top: 8px; /* Space between buttons */
   }
-  
-  .copy-button {
-    margin-left: 8px;
-  }
-  
+}
